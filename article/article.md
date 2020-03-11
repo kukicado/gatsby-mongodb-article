@@ -1,28 +1,28 @@
 # Build a Modern Blog with Gatsby and MongoDB
 
-The web, like many other industries, works in a very cyclical way. Trends are constantly born and reborn. One of my favorite trends that's making a huge come back is static websites and focus on website performance. GatsbyJS presents a new way of building websites that mergers the static with the dynamic that in my opinion provides a worthwhile framework for your consideration.
+The web, like many other industries, works in a very cyclical way. Trends are constantly born and reborn. One of my favorite trends that's making a huge come back is static websites and focus on website performance. [GatsbyJS](https://www.gatsbyjs.org/) presents a new way of building websites that mergers the static with the dynamic that in my opinion provides a worthwhile framework for your consideration.
 
-In today's tutorial, we're going to take a look at how we can leverage GatsbyJS and MongoDB to build a modern blog that can be served anywhere. We'll dive into how GraphQL makes it easy to visualize and work with our content regardless of where it's coming from. Get the code from this GitHub repo to follow along.
+In today's tutorial, we're going to take a look at how we can leverage GatsbyJS and MongoDB to build a modern blog that can be served anywhere. We'll dive into how [GraphQL](https://graphql.org/) makes it easy to visualize and work with our content regardless of where it's coming from. Get the code from [this GitHub repo](https://github.com/kukicado/gatsby-mongodb-article) to follow along.
 
 ## Prerequisites
 
 For this tutorial you'll need:
 
-* A recent version of Node.js
-* A recent version of npm
-* MongoDB
+* [Node.js](https://nodejs.org/en/)
+* [npm](https://www.npmjs.com/)
+* [MongoDB](https://www.mongodb.com/cloud/atlas)
 
-You can download Node.js here, and it will come with the latest version of npm. For MongoDB, you can use an existing install or MongoDB Atlas for free. The dataset we'll be working with comes from {Person}, and can be found in this GitHub repo. All other required items will be covered in the article. 
+You can download Node.js here, and it will come with the latest version of npm. For MongoDB, you can use an existing install or [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) for free. The dataset we'll be working with comes from [Hakan Özler](https://github.com/ozlerhakan), and can be found in this [GitHub repo](https://github.com/ozlerhakan/mongodb-json-files/blob/master/datasets/books.json). All other required items will be covered in the article. 
 
 ## What We're Building: A Modern Book Review Blog
 
-The app that we are building today is called Books Plus. It is a blog that covers news stories and reviews on technical books.
+The app that we are building today is called Books Plus. It is a blog that reviews technical books.
 
 ![Books Plus Homepage](./images/show-posts-homepage.png)
 
 ## Getting Started with GatsbyJS
 
-GatsbyJS is a React based framework for building highly performant websites and applications. The framework allows developers to utilize the modern JavaScript landscape to quickly build static websites. What makes GatsbyJS really stand out is the ecosystem built around it. Plugins for all sorts of features and functionality easily interoperate to provide a powerful toolkit for anything you want your website to do.
+[GatsbyJS](https://www.gatsbyjs.org/) is a [React](https://reactjs.org/) based framework for building highly performant websites and applications. The framework allows developers to utilize the modern JavaScript landscape to quickly build static websites. What makes GatsbyJS really stand out is the ecosystem built around it. [Plugins](https://www.gatsbyjs.org/plugins/) for all sorts of features and functionality easily interoperate to provide a powerful toolkit for anything you want your website to do.
 
 ![Gatsby Website](./images/gatsby-website.png)
 
@@ -36,7 +36,7 @@ To create a GatsbyJS site, we'll need to install the Gatsby CLI. In your Termina
 
 To confirm that the CLI is properly installed run `gatsby -help` in your Terminal. You'll see a list of available commands such as **gatsby build** and **gatsby new**. If you see information similar to the screenshot above, you are good to go.
 
-The next step will be to create a new GatsbyJS website. There's a couple of different ways we can do this. We can start with a barebones GatsbyJS app or a starter app that has various plugins already installed. To keep things simple we'll opt for the former. To create a new barebones GatsbyJS website run the following command:
+The next step will be to create a new GatsbyJS website. There's a couple of different ways we can do this. We can start with a barebones GatsbyJS app or a [starter](https://www.gatsbyjs.org/starters/?v=2) app that has various plugins already installed. To keep things simple we'll opt for the former. To create a new barebones GatsbyJS website run the following command:
 
 ```bash
 gatsby new booksplus
@@ -56,11 +56,11 @@ The default page is not very impressive, but seeing it tells us that we are on t
 
 ## GatsbyJS Secret Sauce: GraphQL
 
-If you were paying attention to your Terminal window while GatsbyJS was building and starting up the development server you may have also noticed a message saying that you can navigate to `localhost:8000/___graphql` to explore your site's data and schema. Good eye! If you haven't, that's ok, let's navigate to this page as well and make sure that it loads and works correctly. 
+If you were paying attention to your Terminal window while GatsbyJS was building and starting up the development server you may have also noticed a message saying that you can navigate to `localhost:8000/___graphql` to explore your sites data and schema. Good eye! If you haven't, that's ok, let's navigate to this page as well and make sure that it loads and works correctly. 
 
 ![GraphiQL UI](./images/graphiql.png)
 
-GraphiQl is a powerful user interface for working with GraphQL schemas, which is what GatsbyJS generates for us when we run `gatsby develop`. All of our websites content, including pages, images, components, and so on become queryable. This API is automatically generated by Gatsby's build system, we just have to learn how to use it to our advantage.
+[GraphiQL](https://github.com/graphql/graphiql) is a powerful user interface for working with GraphQL schemas, which is what GatsbyJS generates for us when we run `gatsby develop`. All of our websites content, including pages, images, components, and so on become queryable. This API is automatically generated by Gatsby's build system, we just have to learn how to use it to our advantage.
 
 If we look at the **Explorer** tab in the GraphiQL interface, we'll see the main queries for our API. Let's run a simple query to see what our current content looks like. The query we'll run is:
 
@@ -93,15 +93,15 @@ And the result:
 
 ![GraphiQL Results with Paths](./images/graphiql-display-pages.png)
 
-The great thing about GraphQL and GraphiQL is that it's really easy to build powerful queries. You can use the explorer to see what fields you can get back. Covering all the ins and outs of GraphQL is out of the scope of this article, but if you are interested in learning more about GraphQL check out this crash course that will get you writing pro queries in no time.
+The great thing about GraphQL and GraphiQL is that it's really easy to build powerful queries. You can use the explorer to see what fields you can get back. Covering all the ins and outs of GraphQL is out of the scope of this article, but if you are interested in learning more about GraphQL check out [this crash course](https://trygql.com/) that will get you writing pro queries in no time.
 
 Now that we have our app set up, let's get to building our application.
 
 ## Adding Content To Our Blog
 
-A blog isn't very useful without content. Our blog reviews books. So the first thing we'll do is get some books to review. New books are constantly being released, so I don't think it would be wise to try and keep track of our books within our GatsbyJS site. A database like MongoDB on the other hand makes sense. [Hakan Özler]() has a curated list of datasets for MongoDB and one of them just happens to be a list of 400+ books. Let's use this dataset.
+A blog isn't very useful without content. Our blog reviews books. So the first thing we'll do is get some books to review. New books are constantly being released, so I don't think it would be wise to try and keep track of our books within our GatsbyJS site. A database like MongoDB on the other hand makes sense. [Hakan Özler](https://github.com/ozlerhakan) has a [curated list of datasets](https://github.com/ozlerhakan/mongodb-json-files) for MongoDB and one of them just happens to be a [list of 400+ books](https://github.com/ozlerhakan/mongodb-json-files/blob/master/datasets/books.json). Let's use this dataset.
 
-I will import the dataset into my database that resides on MongoDB Atlas. If you don't already have MongoDB installed, you can get a free account on MongoDB Atlas. Additionally, if you'd like to evaluate MongoDB Atlas's premium features you can use the code **ADO200** for a $200 credit.
+I will import the dataset into my database that resides on [MongoDB Atlas](https://mongodb.com/cloud/atlas). If you don't already have MongoDB installed, you can get a free account on MongoDB Atlas. Additionally, if you'd like to evaluate MongoDB Atlas's premium features you can use the code **ADO200** for a $200 credit.
 
 In my MongoDB Atlas cluster, I will create a new database and call it `gatsby`. In this new database, I will create a collection called `books`. There are many different ways to import data into your MongoDB database, but since I'm using MongoDB Atlas, I'll just import it directly via the web user interface.
 
@@ -227,7 +227,7 @@ export const pageQuery = graphql`
 `
 ```
 
-We are making a call to the `allMongodbGatsbyBooks` query and asking for all the books in the collection. For each book we want to get it's id, title, shortDescription and thumbnailUrl. Finally, to get this data into our component, we'll pass it through props:
+We are making a call to the `allMongodbGatsbyBooks` query and asking for all the books in the collection. For each book we want to get its id, title, shortDescription and thumbnailUrl. Finally, to get this data into our component, we'll pass it through props:
 
 ```js
 import React from "react"
@@ -430,7 +430,7 @@ exports.createPages = async ({ graphql, actions }) => {
 }
 ```
 
-The above code will do the heavy lifting of going through our list of 400+ books and creating a static page for each one. It does this by utilizing the Gatsby `createPages` API. We supply the pages we want, alongside the UI component to use, as well as the path and context for each, and GatsbyJS does the rest. Let's save this file, run `gatsby clean` and `gatsby develop`, and navigate to `localhost:8000`.
+The above code will do the heavy lifting of going through our list of 400+ books and creating a static page for each one. It does this by utilizing the Gatsby `createPages` API. We supply the pages we want, alongside the React component to use, as well as the path and context for each, and GatsbyJS does the rest. Let's save this file, run `gatsby clean` and `gatsby develop`, and navigate to `localhost:8000`.
 
 Now when the page loads, you should be able to click on any of the books and instead of seeing a 404, you'll see the details of the book rendered at the `/book/{id}` url. 
 
@@ -454,7 +454,7 @@ slug: welcome
 Welcome to BooksPlus, your trusted source of tech book reviews!
 ```
 
-Save this file. To use Markdown files as our source of content, we'll have to add another plugin. This plugin will be used to transform our .md files into digestible content for our GraphQL API as well as ultimately our frontend. This plugin is called `gatsby-transformer-remark` and you can install it by running `npm install --save gatsby-transformer-remark`.
+Save this file. To use Markdown files as our source of content, we'll have to add another plugin. This plugin will be used to transform our `.md` files into digestible content for our GraphQL API as well as ultimately our frontend. This plugin is called `gatsby-transformer-remark` and you can install it by running `npm install --save gatsby-transformer-remark`.
 
 We'll have to configure this plugin in our `gatsby-config.js` file. Open it up and make the following changes:
 
@@ -491,7 +491,7 @@ query MyQuery {
 
 Our result should look something like the screenshot below, and will look exactly like the markdown file we created earlier.
 
-![GraphiQL Markdown Query](./images/graphql-markdown-query.png)
+![GraphiQL Markdown Query](./images/graphiql-markdown-query.png)
 
 ## Rendering Our Blog Content
 
@@ -593,7 +593,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
 The changes we made above will not only generate a different page for each book, but will now generate a unique page for every markdown file. Instead of using a randomly generate id for the content page, we'll use the user-defined slug in the frontmatter.
 
-Let's rebuild our gatsby server and navigate to `localhost:8000/blog/welcome` to see our changes in action.
+Let's restart our Gatsby server and navigate to `localhost:8000/blog/welcome` to see our changes in action.
 
 ![Books Plus Blog Post](./images/books-plus-single-post.png)
 
@@ -707,7 +707,7 @@ createPage({
   }
 ```
 
-We'll be able to use anything passed in this `context` property in our GrpahQL queries in our blog component.
+We'll be able to use anything passed in this `context` property in our GraphQL queries in our blog component.
 
 Next, we'll update our blog component to account for the new query. This query will be the MongoDB based book query. It will look like so:
 
@@ -781,8 +781,8 @@ Clicking the **MongoDB In Action Review** link will take you to a blog page that
 
 ## Putting It All Together
 
-In this tutorial, I showed you how to build a modern blog with GatsbyJS. We used multiple data sources, including a remote MongoDB Atlas database and local markdown files, to generate a static blog. We took a brief tour of GraphQL and how it enhances our development experience by consolidating all of our data sources into a single API that we can query both at build and run time. I hope you learned something new, if you have any questions feel free to ask in our MongoDB community forums.
+In this tutorial, I showed you how to build a modern blog with GatsbyJS. We used multiple data sources, including a remote [MongoDB Atlas](https://mongodb.com/cloud/atlas) database and local markdown files, to generate a static blog. We took a brief tour of GraphQL and how it enhances our development experience by consolidating all of our data sources into a single API that we can query both at build and run time. I hope you learned something new, if you have any questions feel free to ask in our [MongoDB community forums](https://community.mongodb.com/).
 
-If you want to get the code for this tutorial, you can clone it from this GitHub repo. The sample books dataset can also be found here. Try MongoDB Atlas to make it easy to manage and scale your MongoDB database and use code **ADO200** for a $200 credit. 
+If you want to get the code for this tutorial, you can clone it from this [GitHub repo](https://github.com/kukicado/gatsby-mongodb-article). The sample books dataset can also be found [here](https://github.com/ozlerhakan/mongodb-json-files). Try [MongoDB Atlas](https://mongodb.com/cloud/atlas) to make it easy to manage and scale your MongoDB database and use code **ADO200** for a $200 credit. 
 
 Happy coding!
